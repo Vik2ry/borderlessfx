@@ -69,7 +69,7 @@ export class ApiService {
   ): Promise<PreviewResponse | null> {
     try {
       console.log("[v0] Getting swap preview from API")
-      const response = await fetch(`${BASE_URL}/swap`, {
+      const response = await fetch(`${BASE_URL}/wallets/${walletId}/swap`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -101,7 +101,7 @@ export class ApiService {
   static async executeSwap(walletId: string, fromCurrency: string, toCurrency: string, amount: number): Promise<any> {
     try {
       console.log("[v0] Executing swap via API")
-      const response = await fetch(`${BASE_URL}/swap`, {
+      const response = await fetch(`${BASE_URL}/wallets/${walletId}/swap`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
