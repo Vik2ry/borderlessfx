@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { AlertCircle, ArrowRight, LogIn } from "lucide-react"
 import Link from "next/link"
+import apiFetch from '@/lib/api';
 
 export default function LoginPage() {
   const [identifier, setIdentifier] = useState("")
@@ -27,8 +28,7 @@ export default function LoginPage() {
   setIsLoading(true);
   setError("");
   try {
-    const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || "http://unbordered-production.up.railway.app/api";
-    const res = await fetch(`${apiBase}/auth/login/`, {
+    const res = await apiFetch('/auth/login/', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -62,18 +62,18 @@ export default function LoginPage() {
             <LogIn className="w-6 h-6 text-primary-foreground" />
           </div>
           <CardTitle className="text-2xl font-sans">Welcome Back</CardTitle>
-          <CardDescription className="font-serif">Sign in to your Borderless wallet</CardDescription>
+          <CardDescription className="font-serif">Please enter your handle and password</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="identifier" className="font-sans">
-                Email, Phone, or Username
+                Handle
               </Label>
               <Input
                 id="identifier"
                 type="text"
-                placeholder="Enter your email, phone, or username"
+                placeholder="Enter your handle"
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
                 className="font-serif"
