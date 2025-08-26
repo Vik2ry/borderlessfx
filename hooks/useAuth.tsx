@@ -27,7 +27,7 @@ export function useAuth() {
   const login = async (handle: string, password: string) => {
     setLoading(true);
     try {
-      const res = await fetch((process.env.NEXT_PUBLIC_API_BASE || 'http://unbordered-production.up.railway.app') + '/auth/login/', {
+      const res = await fetch((process.env.API_BASE || 'http://unbordered-production.up.railway.app') + '/auth/login/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: handle, password }),
@@ -44,7 +44,7 @@ export function useAuth() {
   const register = async (handle: string, password: string) => {
     setLoading(true);
     try {
-      const res = await fetch((process.env.NEXT_PUBLIC_API_BASE || 'http://unbordered-production.up.railway.app') + '/auth/register/', {
+      const res = await fetch((process.env.API_BASE || 'http://unbordered-production.up.railway.app') + '/auth/register/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ handle, password }),

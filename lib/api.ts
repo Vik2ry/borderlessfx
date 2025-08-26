@@ -1,6 +1,6 @@
 'use client';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://unbordered-production.up.railway.app/api';
+const API_BASE = process.env.API_BASE_URL || 'http://unbordered-production.up.railway.app/api';
 
 async function parseJson(res: Response) {
   const text = await res.text();
@@ -11,7 +11,7 @@ async function refreshToken(): Promise<boolean> {
   if (typeof window === 'undefined') return false;
     const refresh = localStorage.getItem('refresh');
   if (!refresh) return false;
-  const url = (process.env.NEXT_PUBLIC_API_BASE || 'http://unbordered-production.up.railway.app') + '/auth/refresh/';
+  const url = (process.env.API_BASE || 'http://unbordered-production.up.railway.app') + '/auth/refresh/';
   try {
     const r = await fetch(url, {
       method: 'POST',

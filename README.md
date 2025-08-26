@@ -36,8 +36,8 @@ A modern, secure cross-border payment platform that enables instant transfers us
 3. **Environment Variables**
    Create a `.env.local` file in the root directory:
    \`\`\`env
-   NEXT_PUBLIC_API_BASE_URL=https://unbordered-production.up.railway.app/api
-   NEXT_PUBLIC_API_BASE=https://unbordered-production.up.railway.app/api
+   API_BASE_URL=https://unbordered-production.up.railway.app/api
+   API_BASE=https://unbordered-production.up.railway.app/api
    \`\`\`
 
 4. **Run the development server**
