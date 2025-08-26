@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, Globe, Mail, Phone, ArrowRight, AlertCircle, User, RefreshCw } from "lucide-react"
+import { ArrowLeft, Globe, Mail, Phone, ArrowRight, AlertCircle, User, RefreshCw, Lock } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -17,6 +17,8 @@ export default function OnboardPage() {
   const [handle, setHandle] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const [suggestedHandles, setSuggestedHandles] = useState<string[]>([])
@@ -40,7 +42,19 @@ export default function OnboardPage() {
     setError("")
     setSuggestedHandles([]) // Clear previous suggestions
 
-    console.log("[v0] Starting user creation with:", { handle, email, phone })
+    if (password !== confirmPassword) {
+      setError("Passwords do not match")
+      setIsLoading(false)
+      return
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long")
+      setIsLoading(false)
+      return
+    }
+
+    console.log("[v0] Starting user creation with:", { handle, email, phone, password: "***" })
 
     try {
       const apiUrl = "https://unbordered-production.up.railway.app/api/users"
@@ -50,8 +64,9 @@ export default function OnboardPage() {
         handle: handle,
         email: email || undefined,
         phone: phone || undefined,
+        password: password,
       }
-      console.log("[v0] Request body:", requestBody)
+      console.log("[v0] Request body:", { ...requestBody, password: "***" })
 
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -180,7 +195,7 @@ export default function OnboardPage() {
             <CardHeader>
               <CardTitle className="font-sans">Account Information</CardTitle>
               <CardDescription className="font-serif">
-                Choose a username and enter your contact information
+                Choose a username, set a secure password, and enter your contact information
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -247,6 +262,40 @@ export default function OnboardPage() {
                   </div>
 
                   <div className="space-y-2">
+                    <Label htmlFor="password" className="font-sans flex items-center space-x-2">
+                      <Lock className="w-4 h-4" />
+                      <span>Password</span>
+                    </Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="Enter a secure password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="font-serif"
+                      required
+                      minLength={8}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword" className="font-sans flex items-center space-x-2">
+                      <Lock className="w-4 h-4" />
+                      <span>Confirm Password</span>
+                    </Label>
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      placeholder="Confirm your password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="font-serif"
+                      required
+                      minLength={8}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
                     <Label htmlFor="email" className="font-sans flex items-center space-x-2">
                       <Mail className="w-4 h-4" />
                       <span>Email Address</span>
@@ -282,7 +331,7 @@ export default function OnboardPage() {
                 <Button
                   type="submit"
                   className="w-full font-sans"
-                  disabled={!handle || (!email && !phone) || isLoading}
+                  disabled={!handle || !password || !confirmPassword || (!email && !phone) || isLoading}
                 >
                   {isLoading ? (
                     "Creating Wallet..."

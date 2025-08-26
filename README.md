@@ -1,30 +1,137 @@
-# Minimalist UI/UX design
+# 🌍 BorderlessFX - Cross-Border Payment Platform
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+> **Operation Borderless**: Move money across Africa in milliseconds with stablecoins
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/matthew-stones-projects/v0-minimalist-ui-ux-design)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/Qhz83oVIKE5)
+A modern, secure cross-border payment platform that enables instant transfers using stablecoins (cNGN, cXAF, USDx, EURx) with real-time exchange rates and transparent pricing.
 
-## Overview
+## 🚀 Tech Stack
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+- **Frontend**: Next.js 15 (App Router), React 18, TypeScript
+- **Styling**: Tailwind CSS v4, shadcn/ui components
+- **State Management**: React hooks with custom services
+- **API Integration**: RESTful API with Railway backend
+- **Real-time Data**: Live exchange rate updates
+- **Authentication**: JWT-based auth with refresh tokens
+- **Package Manager**: pnpm
 
-## Deployment
+## 📦 Setup Instructions
 
-Your project is live at:
+### Prerequisites
+- Node.js 18+ 
+- pnpm (recommended package manager)
 
-**[https://vercel.com/matthew-stones-projects/v0-minimalist-ui-ux-design](https://vercel.com/matthew-stones-projects/v0-minimalist-ui-ux-design)**
+### Installation
 
-## Build your app
+1. **Clone the repository**
+   \`\`\`bash
+   git clone https://github.com/vik2ry/borderlessfx.git
+   cd borderlessfx
+   \`\`\`
 
-Continue building your app on:
+2. **Install dependencies**
+   \`\`\`bash
+   pnpm install
+   \`\`\`
 
-**[https://v0.app/chat/projects/Qhz83oVIKE5](https://v0.app/chat/projects/Qhz83oVIKE5)**
+3. **Environment Variables**
+   Create a `.env.local` file in the root directory:
+   \`\`\`env
+   NEXT_PUBLIC_API_BASE_URL=https://unbordered-production.up.railway.app/api
+   NEXT_PUBLIC_API_BASE=https://unbordered-production.up.railway.app/api
+   \`\`\`
 
-## How It Works
+4. **Run the development server**
+   \`\`\`bash
+   pnpm dev
+   \`\`\`
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+### Build for Production
+\`\`\`bash
+pnpm build
+pnpm start
+\`\`\`
+
+## 🔐 Admin Credentials
+
+Currently, the platform uses user-based authentication. Admin features are accessible through the wallet dashboard after login.
+
+**Test Account Creation**: Use the onboarding flow at `/onboard` to create a new account with:
+- Handle (username)
+- Email address
+- Phone number
+- Password
+
+## 🎯 Feature Walkthrough
+
+### 🏠 **Landing Page** (`/`)
+- **Live Exchange Rates**: Real-time FX rates updated every 3 minutes
+- **Hero Section**: Clear value proposition with email capture
+- **Feature Overview**: Multi-currency wallets, instant transfers, smart swaps
+- **Rate Preview**: Live rates for USDx→cNGN, USDx→cXAF, EURx→USDx, cNGN→cXAF
+
+### 🔐 **Authentication System**
+- **Login** (`/login`): Secure login with handle/email and password
+- **Onboarding** (`/onboard`): New user registration with comprehensive form
+- **JWT Authentication**: Access and refresh token management
+
+### 💰 **Wallet Dashboard** (`/wallet`)
+- **Multi-Currency Balances**: View cNGN, cXAF, USDx, EURx balances
+- **Balance Charts**: Visual representation of portfolio distribution
+- **Quick Actions**: Send, receive, swap currencies
+- **Transaction History**: Detailed transaction logs with filtering
+
+### 🔍 **Transaction Explorer** (`/explorer`)
+- **Live Transaction Feed**: Real-time transaction monitoring
+- **Transaction Details**: Comprehensive transaction information
+- **Search & Filter**: Find specific transactions by various criteria
+- **Network Statistics**: Platform usage metrics
+
+### 💸 **Transfer System**
+- **Instant Transfers**: Cross-border payments in seconds
+- **Smart Currency Conversion**: Automatic FX conversion with live rates
+- **Recipient Management**: Save and manage frequent recipients
+- **Transfer Confirmation**: Multi-step confirmation process
+
+### 📊 **Real-Time Features**
+- **Live Exchange Rates**: Updated every 3 minutes with fallback to cached data
+- **Rate Service**: Intelligent rate management with retry logic
+- **Transaction Updates**: Real-time transaction status updates
+- **Balance Synchronization**: Automatic balance updates
+
+## 🏗️ Architecture Highlights
+
+### **Service Layer**
+- `RateService`: Manages live exchange rates with intelligent caching
+- `ApiService`: Centralized API communication with error handling
+- `DemoData`: Fallback data for offline/development scenarios
+
+### **Component Structure**
+- **Modular Components**: Reusable UI components with shadcn/ui
+- **Custom Hooks**: `use-mobile`, `use-toast` for enhanced UX
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+
+### **Error Handling**
+- **Graceful Degradation**: Falls back to cached data when API unavailable
+- **User Feedback**: Toast notifications for all user actions
+- **Network Resilience**: Automatic retry logic with exponential backoff
+
+## 🌟 Key Features
+
+- ⚡ **Instant Transfers**: Cross-border payments in milliseconds
+- 🔒 **Bank-Grade Security**: JWT authentication with refresh tokens
+- 📱 **Mobile Responsive**: Optimized for all device sizes
+- 🌍 **Multi-Currency**: Support for cNGN, cXAF, USDx, EURx
+- 📊 **Real-Time Rates**: Live FX data with transparent pricing
+- 🎯 **User-Friendly**: Intuitive interface with clear navigation
+- 🔄 **Offline Resilience**: Graceful handling of network issues
+
+## 🚀 Deployment
+
+The application is designed for deployment on Vercel with the Railway backend. Environment variables are automatically configured in the Vercel dashboard.
+
+---
+
+**Built with ❤️ for seamless cross-border payments across Africa**
