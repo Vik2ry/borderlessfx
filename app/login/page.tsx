@@ -80,6 +80,20 @@ export default function LoginPage() {
                 disabled={isLoading}
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="font-sans">
+                Password
+              </Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="font-serif"
+                disabled={isLoading}
+              />
+            </div>
 
             {error && (
               <div className="bg-destructive/10 border border-destructive/20 p-3 rounded-lg">
