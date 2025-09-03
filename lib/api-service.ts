@@ -28,7 +28,7 @@ export interface ExplorerTransaction {
   status: string
 }
 
-const BASE_URL = "https://unbordered-production.up.railway.app/api"
+const BASE_URL = process.env.API_BASE_URL || process.env.API_BASE || "https://unbordered-production.up.railway.app/api"
 
 export class ApiService {
   private static generateIdempotencyKey(): string {
@@ -44,6 +44,7 @@ export class ApiService {
         headers: {
           "Content-Type": "application/json",
         },
+        signal: AbortSignal.timeout(10000), // 10 second timeout
       })
 
       if (response.ok) {
@@ -55,7 +56,11 @@ export class ApiService {
         return null
       }
     } catch (error) {
-      console.error("[v0] Error fetching exchange rates:", error)
+      if (error instanceof Error) {
+        console.log("[v0] Exchange rates API unavailable:", error.message)
+      } else {
+        console.log("[v0] Exchange rates API unavailable: Unknown error")
+      }
       return null
     }
   }
