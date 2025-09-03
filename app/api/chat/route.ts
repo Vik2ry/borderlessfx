@@ -37,6 +37,14 @@ Keep responses concise but comprehensive. If users ask about getting started, gu
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.GROQ_API_KEY) {
+      console.error("GROQ_API_KEY environment variable is not set")
+      return NextResponse.json(
+        { error: "Chat service is not properly configured. Please contact support." },
+        { status: 500 },
+      )
+    }
+
     const { message, history } = await request.json()
 
     if (!message || typeof message !== "string") {
@@ -69,6 +77,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: text })
   } catch (error) {
     console.error("Chat API error:", error)
+
+    if (error instanceof Error) {
+      if (error.message.includes("API key")) {
+        return NextResponse.json({ error: "Authentication failed. Please contact support." }, { status: 401 })
+      }
+      if (error.message.includes("model")) {
+        return NextResponse.json({ error: "Chat model unavailable. Please try again later." }, { status: 503 })
+      }
+    }
+
     return NextResponse.json({ error: "Failed to process chat message" }, { status: 500 })
   }
 }
