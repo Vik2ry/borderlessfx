@@ -120,12 +120,12 @@ export function FloatingChat() {
       {/* Chat Window */}
       <Card
         className={cn(
-          "fixed bottom-6 right-6 w-80 h-96 shadow-2xl transition-all duration-300 z-50",
+          "fixed bottom-6 right-6 w-80 h-96 shadow-2xl transition-all duration-300 z-50 flex flex-col",
           "border-border bg-card",
           isOpen ? "scale-100 opacity-100" : "scale-0 opacity-0 pointer-events-none",
         )}
       >
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 border-b border-border">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 border-b border-border flex-shrink-0">
           <CardTitle className="text-lg font-sans flex items-center gap-2">
             <Bot className="h-5 w-5 text-primary" />
             Borderless Assistant
@@ -135,10 +135,10 @@ export function FloatingChat() {
           </Button>
         </CardHeader>
 
-        <CardContent className="p-0 flex flex-col h-full">
+        <CardContent className="p-0 flex flex-col flex-1 min-h-0">
           {/* Messages */}
-          <ScrollArea className="flex-1 p-4">
-            <div className="space-y-4">
+          <ScrollArea className="flex-1 min-h-0">
+            <div className="p-4 space-y-4">
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -151,7 +151,7 @@ export function FloatingChat() {
                   )}
                   <div
                     className={cn(
-                      "max-w-[70%] rounded-lg px-3 py-2 text-sm",
+                      "max-w-[70%] rounded-lg px-3 py-2 text-sm break-words",
                       message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground",
                     )}
                   >
@@ -189,7 +189,7 @@ export function FloatingChat() {
           </ScrollArea>
 
           {/* Input */}
-          <div className="p-4 border-t border-border">
+          <div className="p-4 border-t border-border flex-shrink-0">
             <div className="flex gap-2">
               <Input
                 value={input}
